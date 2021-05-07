@@ -1,10 +1,14 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h1></h1>
-        <div class="row">
-            <img [src]="contact.imageUrl" alt="{{contact.name}}" class="img-responsive" style="min-height: 200px;">
-
-            <span class="pull-right"><a href="#" class="btn btn-primary" role="button">Edit</a><a href="#" class="btn btn-danger" role="button">Delete</a></span>
+        <h1>{{contact.name}}</h1>
+        <div class="media">
+            <div class="media-left media-middle">
+                <img [src]="contact.imageUrl" alt="{{contact.name}}" class="media-object" style="max-height: 150px;">
+            </div>
+            <div class="media-body media-middle">
+                <div class="pull-right"><a href="#" class="btn btn-primary" role="button">Edit</a>
+                    <a href="#" class="btn btn-danger" role="button">Delete</a></div>
+            </div>
         </div>
     </div>
 
@@ -14,8 +18,6 @@
                 <div class="pull-left">
                     <h4 class="list-group-item-heading">Email: {{contact.email}}</h4>
                     <h4 class="list-group-item-heading">Phone: {{contact.phone}}</h4>
-
-
                 </div>
             </div>
         </div>
