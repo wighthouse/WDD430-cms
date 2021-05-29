@@ -6,8 +6,8 @@
                 <img [src]="contact.imageUrl" alt="{{contact.name}}" class="media-object" style="max-height: 150px;">
             </div>
             <div class="media-body media-middle">
-                <div class="pull-right"><a href="#" class="btn btn-primary" role="button">Edit</a>
-                    <a href="#" class="btn btn-danger" role="button">Delete</a></div>
+                <div class="pull-right"><a [routerLink]="['/contacts', contact.id, 'edit']" class="btn btn-primary" role="button">Edit</a>
+                    <a (click)="onDelete()" class="btn btn-danger" role="button">Delete</a></div>
             </div>
         </div>
     </div>

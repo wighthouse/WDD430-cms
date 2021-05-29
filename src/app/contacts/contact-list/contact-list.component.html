@@ -1,10 +1,10 @@
 <div class="panel panel-default">
     <div class="panel-heading">Contacts
-        <span class="pull-right"><button class="btn btn-success">New Contact</button></span></div>
+        <span class="pull-right"><button class="btn btn-success" [routerLink]="['new']">New Contact</button></span></div>
     <div class="panel-body">
         <div class="row">
             <div class="col-xs-12">
-                <cms-contact-item *ngFor="let contact of contacts" [contact]="contact" (contactSelected)="onContactSelected(contact)"></cms-contact-item>
+                <cms-contact-item *ngFor="let contact of contacts" [contact]="contact"></cms-contact-item>
             </div>
         </div>
     </div>
