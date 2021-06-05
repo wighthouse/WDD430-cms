@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Contact } from './contact.model';
 import { ContactService } from './contact.service';
 
@@ -7,8 +8,10 @@ import { ContactService } from './contact.service';
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.css']
 })
-export class ContactsComponent implements OnInit {
+export class ContactsComponent implements OnInit, OnDestroy {
 selectedContact: Contact;
+private conSelSub: Subscription;
+
   constructor(private contactService: ContactService) { }
 
   ngOnInit() {
@@ -17,5 +20,8 @@ selectedContact: Contact;
 this.selectedContact = contact;
   }
     );
+  }
+  ngOnDestroy(): void {
+    this.conSelSub.unsubscribe();
   }
 }
