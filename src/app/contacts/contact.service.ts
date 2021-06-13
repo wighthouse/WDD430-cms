@@ -14,6 +14,7 @@ export class ContactService {
   private maxContactId: number;
   constructor() {
     this.contacts = MOCKCONTACTS;
+    this.maxContactId = this.getMaxId();
    }
    getContacts() {
      return this.contacts.slice();
@@ -54,7 +55,7 @@ export class ContactService {
       return maxId;
     }
   
-   addcontact(newContact: Contact) {
+   addContact(newContact: Contact) {
     if (!newContact) {
       return;
    }
@@ -65,7 +66,7 @@ export class ContactService {
   
    } 
   
-   updatecontact(originalContact: Contact, newContact: Contact)
+   updateContact(originalContact: Contact, newContact: Contact)
   {
     if (!originalContact || !newContact) {
       return;

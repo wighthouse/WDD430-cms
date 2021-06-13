@@ -1,0 +1,14 @@
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+.dragMsg {
+    font-size: 2rem;
+    color: dimgrey;
+    text-align: center;
+}
+
+#groupList {
+    background-color: rgb(238, 178, 178);
+    min-height: 6rem;
+}

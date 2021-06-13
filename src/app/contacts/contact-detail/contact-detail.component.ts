@@ -10,6 +10,8 @@ import { ContactService } from '../contact.service';
 })
 export class ContactDetailComponent implements OnInit {
   contact: Contact;
+  contacts: Contact[] = [];
+  groupContacts: Contact[]= [];
   id: string;
  
   constructor(private contactService: ContactService,
@@ -21,6 +23,7 @@ export class ContactDetailComponent implements OnInit {
       (params: Params) => {
       this.id = params['id'];
       this.contact = this.contactService.getContact(this.id);
+      console.log(this.contact);
     }
     );
   }
