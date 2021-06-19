@@ -1,7 +1,7 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { MOCKDOCUMENTS } from './MOCKDOCUMENTS';
-import {Document } from './document.model';
+import { Injectable } from '@angular/core';
+import { Document } from './document.model';
 import { Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +12,27 @@ export class DocumentService {
   private documents: Document[] = [];
   private maxDocumentId: number;
 
-  constructor() { 
-    this.documents = MOCKDOCUMENTS;
-    this.maxDocumentId = this.getMaxId();
+  constructor(private http: HttpClient) { 
+    this.http.get('https://wdd430-cms-f90de-default-rtdb.firebaseio.com/documents.json')
+    .subscribe((documents: Document[]) => {
+      this.documents = documents;
+      this.maxDocumentId = this.getMaxId();
+      console.log(this.documents[2].name);
+      this.documents =this.documents.sort((a, b) => a.name > b.name ? 1 : 0);
+      this.documentChangedEvent.next(this.documents.slice());
+        console.log(this.documents);
+        return documents;
+    },
+    (error: any) =>{
+      console.log(error);
+    }
+    );
+    
   }
 
   getDocuments() {
     return this.documents.slice();
+
 }
 getDocument(id: string) {
   for (let document of this.documents) {
