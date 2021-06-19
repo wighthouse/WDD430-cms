@@ -18,7 +18,7 @@ export class DocumentService {
       this.documents = documents;
       this.maxDocumentId = this.getMaxId();
       console.log(this.documents[2].name);
-      this.documents =this.documents.sort((a, b) => a.name > b.name ? 1 : 0);
+      this.documents.sort((a, b) => a.name > b.name ? -1 : 0);
       this.documentChangedEvent.next(this.documents.slice());
         console.log(this.documents);
         return documents;
@@ -29,6 +29,16 @@ export class DocumentService {
     );
     
   }
+
+  storeDocuments() {
+    const documents = JSON.stringify(this.documents)
+    this.http.put('https://wdd430-cms-f90de-default-rtdb.firebaseio.com/documents.json', 
+    documents).subscribe(response => {
+      this.documentChangedEvent.next(this.documents.slice());
+        console.log(response);
+    });
+
+}
 
   getDocuments() {
     return this.documents.slice();
@@ -52,7 +62,7 @@ deleteDocument(document: Document) {
      return;
   }
   this.documents.splice(pos, 1);
-  this.documentChangedEvent.next(this.documents.slice());
+  this.storeDocuments();
 }
 getMaxId(): number {
   let maxId: number = 0;
@@ -75,7 +85,7 @@ getMaxId(): number {
 this.maxDocumentId++;
 newDocument.id = this.maxDocumentId.toString();
 this.documents.push(newDocument);
-this.documentChangedEvent.next(this.documents.slice());
+this.storeDocuments();
  } 
 
  updateDocument(originalDocument: Document, newDocument: Document)
@@ -89,7 +99,7 @@ this.documentChangedEvent.next(this.documents.slice());
   }
   newDocument.id = originalDocument.id;
   this.documents[pos] =newDocument;
-  this.documentChangedEvent.next(this.documents.slice());
+  this.storeDocuments();
 }
 
 }
