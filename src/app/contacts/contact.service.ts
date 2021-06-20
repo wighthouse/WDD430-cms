@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Contact } from './contact.model';
@@ -12,10 +13,34 @@ export class ContactService {
   contactChangedEvent = new Subject<Contact []>();
   private contacts: Contact [] =[];
   private maxContactId: number;
-  constructor() {
-    this.contacts = MOCKCONTACTS;
-    this.maxContactId = this.getMaxId();
-   }
+  
+  constructor(private http: HttpClient) { 
+    this.http.get('https://wdd430-cms-f90de-default-rtdb.firebaseio.com/contacts.json')
+    .subscribe((contacts: Contact[]) => {
+      this.contacts = contacts;
+      this.maxContactId = this.getMaxId();
+      this.contacts.sort((a, b) => a.name < b.name ? -1 : 0);
+      this.contactChangedEvent.next(this.contacts.slice());
+        console.log(this.contacts);
+        return contacts;
+    },
+    (error: any) =>{
+      console.log(error);
+    }
+    );
+    
+  }
+
+  storeContacts() {
+    const contacts = JSON.stringify(this.contacts)
+    this.http.put('https://wdd430-cms-f90de-default-rtdb.firebaseio.com/contacts.json', 
+    contacts).subscribe(response => {
+      this.contactChangedEvent.next(this.contacts.slice());
+        console.log(response);
+       
+    });
+
+}
    getContacts() {
      return this.contacts.slice();
    }
@@ -39,7 +64,7 @@ export class ContactService {
        return;
     }
     this.contacts.splice(pos, 1);
-    this.contactChangedEvent.next(this.contacts.slice());
+    this.storeContacts();
   }
   getMaxId(): number {
     let maxId: number = 0;
@@ -62,7 +87,7 @@ export class ContactService {
   this.maxContactId++;
   newContact.id = this.maxContactId.toString();
   this.contacts.push(newContact);
-  this.contactChangedEvent.next(this.contacts.slice());
+  this.storeContacts();
   
    } 
   
@@ -77,7 +102,7 @@ export class ContactService {
     }
     newContact.id = originalContact.id;
     this.contacts[pos] =newContact;
-    this.contactChangedEvent.next(this.contacts.slice());
+    this.storeContacts();
   }
   
 

@@ -17,8 +17,7 @@ export class DocumentService {
     .subscribe((documents: Document[]) => {
       this.documents = documents;
       this.maxDocumentId = this.getMaxId();
-      console.log(this.documents[2].name);
-      this.documents.sort((a, b) => a.name > b.name ? -1 : 0);
+      this.documents.sort((a, b) => a.name < b.name ? -1 : 0);
       this.documentChangedEvent.next(this.documents.slice());
         console.log(this.documents);
         return documents;
@@ -36,6 +35,7 @@ export class DocumentService {
     documents).subscribe(response => {
       this.documentChangedEvent.next(this.documents.slice());
         console.log(response);
+       
     });
 
 }
