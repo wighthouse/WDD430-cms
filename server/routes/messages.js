@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const sequenceGenerator = require('./sequenceGenerator');
-const Message = require('../models/document');
+const Message = require('../models/message');
 
 router.get("/", (req, res, next) => {
     Message.find().then(messages => {
@@ -47,9 +47,9 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
     Message.findOne({ id: req.params.id })
         .then(message => {
-            message.name = req.body.name;
-            message.description = req.body.description;
-            message.url = req.body.url;
+            message.subject = req.body.subject;
+            message.msgText = req.body.msgText;
+            message.sender = req.body.sender;
 
             Message.updateOne({ id: req.params.id }, message)
                 .then(result => {

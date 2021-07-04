@@ -98,10 +98,10 @@ export class ContactService {
       let currentId = +contact.id;
       if (currentId > maxId) {
         maxId = currentId;
-        console.log(maxId);
-      }
 
       }
+
+      }console.log(maxId);
       return maxId;
     }
 

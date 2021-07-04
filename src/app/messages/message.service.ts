@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
+import {  Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Message } from './message.model';
 
 
@@ -8,7 +9,7 @@ import { Message } from './message.model';
   providedIn: 'root'
 })
 export class MessageService {
-  messageChangedEvent = new EventEmitter<Message[]>();
+  messageChangedEvent = new Subject<Message[]>();
   private messages: Message []=[];
   private maxMessageId: number;
   constructor(private http: HttpClient) {
@@ -80,6 +81,7 @@ return null;
           // add new message to messages
           this.messages.push(responseData.message);
           this.messageChangedEvent.next(this.messages.slice());
+
         }
       );
   }
